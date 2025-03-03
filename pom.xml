@@ -1,62 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.rekreation</groupId>
-	<artifactId>spring-boot-3-microservices</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-3-microservices</name>
-	<description>Learning project for Spring Boot 3 and Microservices</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
-	<modules>
-		<module>api-gateway</module>
-		<module>product-service</module>
-		<module>order-service</module>
-		<module>inventory-service</module>
-		<module>notification-service</module>
-	</modules>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.rekreation</groupId>
+    <artifactId>spring-boot-3-microservices</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>spring-boot-3-microservices</name>
+    <description>Learning project for Spring Boot 3 and Microservices</description>
+    <url/>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>tushartari11</id>
+            <name>Tushar Tari</name>
+            <email>tushar@example.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/tushartari11/spring-boot-3-microservices.git</connection>
+        <developerConnection>scm:git:ssh://github.com:tushartari11/spring-boot-3-microservices.git</developerConnection>
+        <url>https://github.com/tushartari11/spring-boot-3-microservices</url>
+    </scm>
+    <modules>
+        <module>api-gateway</module>
+        <module>product-service</module>
+        <module>order-service</module>
+        <module>inventory-service</module>
+        <module>notification-service</module>
+    </modules>
 
-	<properties>
-		<java.version>21</java.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
+    <properties>
+        <java.version>21</java.version>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <docker.password>${dockerPassword}</docker.password>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>tushartari17/new-${project.artifactId}</name>
+                        <builder>dashaun/builder:tiny</builder>
+                        <publish>true</publish>
+                    </image>
+                    <docker>
+                        <publishRegistry>
+                            <username>tushartari17</username>
+                            <password>${docker.password}</password>
+                        </publishRegistry>
+                    </docker>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
