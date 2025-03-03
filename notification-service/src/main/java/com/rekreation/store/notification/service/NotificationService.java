@@ -1,7 +1,5 @@
 package com.rekreation.store.notification.service;
 
-
-import com.rekreation.store.order.event.OrderPlacedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -10,7 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import com.rekreation.store.order.event.OrderPlacedEvent;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +18,7 @@ public class NotificationService {
     private final JavaMailSender javaMailSender;
 
     @KafkaListener(topics = "order_placed")
-    public void listenOrderPlaced(OrderPlacedEvent orderPlacedEvent) {
+    public void listenOrderPlaced(  com.rekreation.store.order.event.OrderPlacedEvent orderPlacedEvent) {
         log.info("Notification received from order-placed topic: {}", orderPlacedEvent);
 
         MimeMessagePreparator messagePreparator = mimeMessage -> {
